@@ -1,4 +1,4 @@
-package com.example.testapplication.model.room
+package com.example.testapplication.source.local.room
 
 import com.example.testapplication.model.data.CurrencyInfo
 import kotlinx.coroutines.flow.Flow

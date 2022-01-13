@@ -1,8 +1,8 @@
 package com.example.testapplication.di
 
 import com.example.testapplication.source.Source
-import com.example.testapplication.source.LocalSourceImpl
-import com.example.testapplication.source.RemoteSourceImpl
+import com.example.testapplication.source.local.LocalSourceImpl
+import com.example.testapplication.source.remote.RemoteSourceImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

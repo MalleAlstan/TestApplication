@@ -1,8 +1,8 @@
-package com.example.testapplication.source
+package com.example.testapplication.source.remote
 
-import android.util.Log
 import com.example.testapplication.model.data.CurrencyInfo
-import com.example.testapplication.model.room.RoomDB
+import com.example.testapplication.source.Source
+import com.example.testapplication.source.local.room.RoomDB
 import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.Types
@@ -16,9 +16,7 @@ import javax.inject.Singleton
 
 @Singleton
 class RemoteSourceImpl @Inject constructor(
-
     private val roomDb: RoomDB
-
 ) : Source {
 
     override suspend fun fetchCurrency(): Flow<List<CurrencyInfo>> {

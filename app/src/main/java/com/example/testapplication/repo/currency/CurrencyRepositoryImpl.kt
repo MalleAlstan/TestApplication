@@ -13,10 +13,8 @@ import javax.inject.Singleton
 
 @Singleton
 class CurrencyRepositoryImpl @Inject constructor(
-
     @RemoteData private val remoteSource: Source,
     @LocalData private val localSource: Source
-
 ) : CurrencyRepository {
 
     var hasLocalData = false
