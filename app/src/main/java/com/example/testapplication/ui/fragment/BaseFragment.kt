@@ -6,6 +6,8 @@ import androidx.fragment.app.Fragment
 
 abstract class BaseFragment: Fragment() {
 
+    protected val TAG = this.javaClass.name
+    
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
