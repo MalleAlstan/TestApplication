@@ -15,8 +15,8 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class CurrencyListFragment: BaseFragment() {
 
-    private var _binding: FragmentCurrencyInfoBinding? = null
-    private val binding get() = _binding!!
+    private lateinit var _binding: FragmentCurrencyInfoBinding
+    private val binding get() = _binding
 
     private val mainViewModel: MainViewModel by activityViewModels()
 
@@ -29,14 +29,8 @@ class CurrencyListFragment: BaseFragment() {
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        initView()
-        bindData()
-    }
-
     override fun initView() {
+
 
     }
 
@@ -56,11 +50,6 @@ class CurrencyListFragment: BaseFragment() {
             }
         }
         binding.textview.text = text
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 }
 
