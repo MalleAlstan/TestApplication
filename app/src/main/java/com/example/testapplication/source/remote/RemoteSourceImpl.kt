@@ -6,7 +6,6 @@ import com.example.testapplication.source.local.room.CurrencyInfoDao
 import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.Types
-import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 import java.lang.reflect.Type
@@ -16,7 +15,8 @@ import javax.inject.Singleton
 
 @Singleton
 class RemoteSourceImpl @Inject constructor(
-    private val currencyInfo: CurrencyInfoDao
+    private val currencyInfo: CurrencyInfoDao,
+    private val moshi: Moshi
 ) : Source {
 
     override suspend fun fetchCurrency(): Flow<List<CurrencyInfo>> {
@@ -32,7 +32,6 @@ class RemoteSourceImpl @Inject constructor(
 
     private fun getMockResponse(): List<CurrencyInfo> {
 
-        val moshi: Moshi = Moshi.Builder().add(KotlinJsonAdapterFactory()).build()
         val type: Type = Types.newParameterizedType(List::class.java, CurrencyInfo::class.java)
         val adapter: JsonAdapter<List<CurrencyInfo>> = moshi.adapter(type)
         return adapter.fromJson(mockJson)?: listOf()
