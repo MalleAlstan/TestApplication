@@ -32,12 +32,10 @@ class MainViewModel @Inject constructor(
             currencyListJob?.cancel()
         }
 
-        currencyListJob = viewModelScope.launch(Dispatchers.IO) {
-
+        currencyListJob = viewModelScope.launch {
             yield()
-
             currencyRepository.fetchCurrencyList().collect {
-                _currencyList.postValue(it)
+                _currencyList.value = it
             }
         }
     }
@@ -48,12 +46,14 @@ class MainViewModel @Inject constructor(
             return
         }
 
-        currencyListJob = viewModelScope.launch(Dispatchers.IO) {
-
+        currencyListJob = viewModelScope.launch {
             yield()
-
-            val sorted = currencyList.value?.sortedBy { it.name }
-            _currencyList.postValue(sorted?: listOf())
+            _currencyList.value = getSortedCurrencyInfList()
         }
+    }
+
+    private suspend fun getSortedCurrencyInfList(): List<CurrencyInfo> =
+        withContext(Dispatchers.IO) {
+            currencyList.value?.sortedBy { it.name }?: listOf()
     }
 }
