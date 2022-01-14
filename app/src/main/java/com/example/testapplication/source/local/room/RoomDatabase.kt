@@ -5,7 +5,7 @@ import androidx.room.RoomDatabase
 import com.example.testapplication.model.data.CurrencyInfo
 
 @Database(entities = [CurrencyInfo::class], version = 1)
-abstract class AppDatabase : RoomDatabase() {
+abstract class RoomDatabase: RoomDatabase() {
 
     abstract fun currencyInfoDao(): CurrencyInfoDao
 }

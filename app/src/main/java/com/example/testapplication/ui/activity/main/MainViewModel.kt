@@ -1,6 +1,5 @@
 package com.example.testapplication.ui.activity.main
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -9,7 +8,6 @@ import com.example.testapplication.repo.currency.CurrencyRepository
 import com.example.testapplication.ui.activity.BaseActivityViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.*
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collect
 import javax.inject.Inject
 
@@ -48,11 +46,11 @@ class MainViewModel @Inject constructor(
 
         currencyListJob = viewModelScope.launch {
             yield()
-            _currencyList.value = getSortedCurrencyInfList()
+            _currencyList.value = getSortedCurrencyInfoList()
         }
     }
 
-    private suspend fun getSortedCurrencyInfList(): List<CurrencyInfo> =
+    private suspend fun getSortedCurrencyInfoList(): List<CurrencyInfo> =
         withContext(Dispatchers.IO) {
             currencyList.value?.sortedBy { it.name }?: listOf()
     }

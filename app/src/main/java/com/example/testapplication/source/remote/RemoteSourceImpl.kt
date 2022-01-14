@@ -2,7 +2,7 @@ package com.example.testapplication.source.remote
 
 import com.example.testapplication.model.data.CurrencyInfo
 import com.example.testapplication.source.Source
-import com.example.testapplication.source.local.room.RoomDB
+import com.example.testapplication.source.local.room.CurrencyInfoDao
 import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.Types
@@ -16,13 +16,15 @@ import javax.inject.Singleton
 
 @Singleton
 class RemoteSourceImpl @Inject constructor(
-    private val roomDb: RoomDB
+    private val currencyInfo: CurrencyInfoDao
 ) : Source {
 
     override suspend fun fetchCurrency(): Flow<List<CurrencyInfo>> {
 
         val currencyInfoList = getMockResponse()
-        roomDb.insertCurrencyInfoList(currencyInfoList)
+        for (info in currencyInfoList) {
+            currencyInfo.insertAll(info)
+        }
 
         // save mock data to db only.
         return flowOf()

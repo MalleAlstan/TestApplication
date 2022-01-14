@@ -6,5 +6,5 @@ import dagger.hilt.components.SingletonComponent
 
 @Module
 @InstallIn(SingletonComponent::class)
-interface ApiModule {
+abstract class ApiModule {
 }

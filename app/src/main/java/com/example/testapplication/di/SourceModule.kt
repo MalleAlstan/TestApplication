@@ -12,15 +12,15 @@ import javax.inject.Qualifier
 
 @Module
 @InstallIn(SingletonComponent::class)
-interface SourceModule {
+abstract class SourceModule {
 
     @Binds
     @RemoteData
-    fun provideDataSourceRemoteImpl(remoteDataSource: RemoteSourceImpl): Source
+    abstract fun provideDataSourceRemoteImpl(remoteSource: RemoteSourceImpl): Source
 
     @Binds
     @LocalData
-    fun provideDataSourceLocalImpl(remoteDataSource: LocalSourceImpl): Source
+    abstract fun provideDataSourceLocalImpl(remoteSource: LocalSourceImpl): Source
 
     @Qualifier
     @Retention(AnnotationRetention.RUNTIME)

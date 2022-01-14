@@ -1,12 +1,10 @@
 package com.example.testapplication.repo.currency
 
-import android.util.Log
-import com.example.testapplication.di.SourceModule.RemoteData
 import com.example.testapplication.di.SourceModule.LocalData
+import com.example.testapplication.di.SourceModule.RemoteData
 import com.example.testapplication.model.data.CurrencyInfo
 import com.example.testapplication.source.Source
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
