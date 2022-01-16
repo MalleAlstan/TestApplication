@@ -15,9 +15,9 @@ import javax.inject.Singleton
 class CurrencyRepositoryImpl @Inject constructor(
     @RemoteData private val remoteSource: Source,
     @LocalData private val localSource: Source
-) : CurrencyRepository {
+): CurrencyRepository {
 
-    var hasLocalData = false
+    private var hasLocalData = false
 
     override suspend fun fetchCurrencyList(): Flow<List<CurrencyInfo>> =
         withContext(Dispatchers.IO){
