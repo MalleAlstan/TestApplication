@@ -47,19 +47,4 @@ class MainViewModelTest: BaseViewModelTest() {
             assert(result == mockCurrencyInfoList)
         }
     }
-
-    @Test
-    fun fetchCurrencyHasJob() {
-
-        runBlockingTest {
-            Mockito.`when`(currencyRepository.fetchCurrencyList()).thenReturn(
-                flowOf(mockCurrencyInfoList)
-            )
-
-            mainViewModel.fetchCurrency()
-
-            val result = mainViewModel.currencyList.value
-            assert(result == mockCurrencyInfoList)
-        }
-    }
 }
