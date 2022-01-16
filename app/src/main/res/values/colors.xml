@@ -3,6 +3,9 @@
     <color name="purple_200">#FFBB86FC</color>
     <color name="purple_500">#FF6200EE</color>
     <color name="purple_700">#FF3700B3</color>
+    <color name="light_blue_129eff">#129EFF</color>
+    <color name="dark_blue_0a1729">#0A1729</color>
+    <color name="navy_0e223b">#0E223b</color>
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>

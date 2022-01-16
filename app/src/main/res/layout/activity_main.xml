@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/navy_0e223b"
     tools:context=".ui.activity.main.MainActivity">
 
     <EditText
