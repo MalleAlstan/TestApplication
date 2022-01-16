@@ -17,7 +17,7 @@ import javax.inject.Singleton
 class RemoteSourceImpl @Inject constructor(
     private val currencyInfo: CurrencyInfoDao,
     private val moshi: Moshi
-) : Source {
+): Source {
 
     override suspend fun fetchCurrency(): Flow<List<CurrencyInfo>> {
 
