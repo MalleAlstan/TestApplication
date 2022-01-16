@@ -31,7 +31,7 @@ object RoomModule {
     fun provideCurrencyInfoDao(@CurrencyTable database: RoomDatabase) = database.currencyInfoDao()
 
     @Provides
-    fun provideMoshi() = Moshi.Builder().add(KotlinJsonAdapterFactory()).build()
+    fun provideMoshi(): Moshi = Moshi.Builder().add(KotlinJsonAdapterFactory()).build()
 
     @Qualifier
     @Retention(AnnotationRetention.RUNTIME)
