@@ -1,5 +1,6 @@
 package com.example.testapplication.source.local
 
+import android.database.sqlite.SQLiteException
 import com.example.testapplication.model.data.CurrencyInfo
 import com.example.testapplication.source.Source
 import com.example.testapplication.source.local.room.CurrencyInfoDao
@@ -13,7 +14,13 @@ class LocalSourceImpl @Inject constructor(
     private val currencyInfo: CurrencyInfoDao
 ): Source {
 
+
     override suspend fun fetchCurrency(): Flow<List<CurrencyInfo>> {
-        return flowOf(currencyInfo.getAll())
+        return try {
+            flowOf(currencyInfo.getAll())
+        } catch (e: SQLiteException) {
+            e.printStackTrace()
+            flowOf(listOf())
+        }
     }
 }

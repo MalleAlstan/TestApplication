@@ -1,5 +1,6 @@
 package com.example.testapplication.source.remote
 
+import android.database.sqlite.SQLiteException
 import com.example.testapplication.model.data.CurrencyInfo
 import com.example.testapplication.source.Source
 import com.example.testapplication.source.local.room.CurrencyInfoDao
@@ -9,7 +10,6 @@ import com.squareup.moshi.Types
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 import java.lang.reflect.Type
-
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -21,11 +21,14 @@ class RemoteSourceImpl @Inject constructor(
 
     override suspend fun fetchCurrency(): Flow<List<CurrencyInfo>> {
 
-        val currencyInfoList = getMockResponse()
-        for (info in currencyInfoList) {
-            currencyInfo.insertAll(info)
+        try {
+            val currencyInfoList = getMockResponse()
+            for (info in currencyInfoList) {
+                currencyInfo.insertAll(info)
+            }
+        } catch (e: SQLiteException) {
+            e.printStackTrace()
         }
-
         // save mock data to db only.
         return flowOf()
     }

@@ -51,7 +51,9 @@ class CurrencyListFragment: BaseFragment() {
     }
 
     private fun updateRecyclerView(list: List<CurrencyInfo>) {
-        currencyInfoAdapter.setItems(list)
+        if (list.isNotEmpty()) {
+            currencyInfoAdapter.setItems(list)
+        }
     }
 
     private fun onItemClicked(currencyInfo: CurrencyInfo) {
