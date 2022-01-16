@@ -2,7 +2,7 @@ package com.example.testapplication.di
 
 import android.content.Context
 import androidx.room.Room
-import com.example.testapplication.source.local.room.RoomDatabase
+import com.example.testapplication.source.local.room.CryptoCurrencyDatabase
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module
@@ -17,21 +17,21 @@ import javax.inject.Qualifier
 @Module
 object RoomModule {
 
-    private const val CURRENCY_INFO = "currency_info"
+    private const val CRYPTO_CURRENCY = "crypto_currency"
 
     @Provides
     @CurrencyTable
-    fun provideCurrencyTableDatabase(@ApplicationContext context: Context) = Room.databaseBuilder(
+    fun provideCryptoCurrencyDatabase(@ApplicationContext context: Context) = Room.databaseBuilder(
         context,
-        RoomDatabase::class.java,
-        CURRENCY_INFO
+        CryptoCurrencyDatabase::class.java,
+        CRYPTO_CURRENCY
     ).build()
 
     @Provides
-    fun provideCurrencyInfoDao(@CurrencyTable database: RoomDatabase) = database.currencyInfoDao()
+    fun provideCurrencyInfoDao(@CurrencyTable database: CryptoCurrencyDatabase) = database.currencyInfoDao()
 
     @Provides
-    fun provideMoshi() = Moshi.Builder().add(KotlinJsonAdapterFactory()).build()
+    fun provideMoshi(): Moshi = Moshi.Builder().add(KotlinJsonAdapterFactory()).build()
 
     @Qualifier
     @Retention(AnnotationRetention.RUNTIME)
