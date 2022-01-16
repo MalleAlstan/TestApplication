@@ -6,9 +6,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.testapplication.databinding.FragmentCurrencyInfoBinding
 import com.example.testapplication.model.data.CurrencyInfo
 import com.example.testapplication.ui.activity.main.MainViewModel
+import com.example.testapplication.ui.adapter.CurrencyInfoAdapter
 import com.example.testapplication.ui.fragment.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -19,6 +22,7 @@ class CurrencyListFragment: BaseFragment() {
     private val binding get() = _binding!!
 
     private val mainViewModel: MainViewModel by activityViewModels()
+    private lateinit var currencyInfoAdapter: CurrencyInfoAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -37,7 +41,13 @@ class CurrencyListFragment: BaseFragment() {
     }
 
     override fun initView() {
+        currencyInfoAdapter =
+            CurrencyInfoAdapter(mainViewModel.currencyList.value?: arrayListOf()) { onItemClicked(it) }
 
+        binding.rvCurrencyInfo.apply {
+            layoutManager = LinearLayoutManager(requireActivity(), RecyclerView.VERTICAL, false)
+            adapter = currencyInfoAdapter
+        }
     }
 
     override fun bindData() {
@@ -48,14 +58,11 @@ class CurrencyListFragment: BaseFragment() {
     }
 
     private fun updateRecyclerView(list: List<CurrencyInfo>) {
+        currencyInfoAdapter.setItems(list)
+    }
 
-        var text = ""
-        if (list.isNotEmpty()) {
-            for (info in list) {
-                text += (info.id + "-" + info.name + " (" + list.first().symbol + ")" + "\n")
-            }
-        }
-        binding.textview.text = text
+    private fun onItemClicked(currencyInfo: CurrencyInfo) {
+        mainViewModel.onSelectCurrencyInfo(currencyInfo)
     }
 
     override fun onDestroyView() {

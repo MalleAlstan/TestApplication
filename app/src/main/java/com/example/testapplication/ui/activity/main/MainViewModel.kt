@@ -56,4 +56,8 @@ class MainViewModel @Inject constructor(
             _currencyList.postValue(sorted?: listOf())
         }
     }
+
+    fun onSelectCurrencyInfo(currencyInfo: CurrencyInfo) {
+        _selectedCurrency.value = currencyInfo
+    }
 }
