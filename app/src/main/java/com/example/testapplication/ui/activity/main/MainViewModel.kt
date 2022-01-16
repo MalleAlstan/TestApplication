@@ -52,6 +52,10 @@ class MainViewModel @Inject constructor(
 
     private suspend fun getSortedCurrencyInfoList(): List<CurrencyInfo> =
         withContext(Dispatchers.IO) {
-            currencyList.value?.sortedBy { it.name }?: listOf()
+            currencyList.value?.sortedBy { it.name } ?: listOf()
+        }
+
+    fun onSelectCurrencyInfo(currencyInfo: CurrencyInfo) {
+        _selectedCurrency.value = currencyInfo
     }
 }
