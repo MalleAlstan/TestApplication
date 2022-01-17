@@ -46,14 +46,9 @@ class MainViewModel @Inject constructor(
 
         currencyListJob = viewModelScope.launch {
             yield()
-            _currencyList.value = getSortedCurrencyInfoList()
+            _currencyList.value = currencyList.value?.sortedBy { it.name }
         }
     }
-
-    private suspend fun getSortedCurrencyInfoList(): List<CurrencyInfo> =
-        withContext(Dispatchers.IO) {
-            currencyList.value?.sortedBy { it.name } ?: listOf()
-        }
 
     fun onSelectCurrencyInfo(currencyInfo: CurrencyInfo) {
         _selectedCurrency.value = currencyInfo

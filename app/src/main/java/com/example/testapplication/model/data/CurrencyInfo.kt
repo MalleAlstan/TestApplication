@@ -7,7 +7,7 @@ import com.squareup.moshi.JsonClass
 
 @Entity
 @JsonClass(generateAdapter = true)
-class CurrencyInfo (
+data class CurrencyInfo (
     @PrimaryKey val id: String = "",
     @ColumnInfo (name = "name") val name: String = "",
     @ColumnInfo (name = "symbol") val symbol: String = ""
