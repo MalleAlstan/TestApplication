@@ -9,7 +9,7 @@ This is a list showing demo app.
 **Android Version** - Later than Android 21  
 **Programming Language** - Kotlin  
 **DI** - Hilt  
-**Framework** - MVVM with Coroutine, Flow and LiveData  
+**Framework** - MVVM with Coroutine and LiveData  
 **Unit/UI test** - Mockito, JUnit  
 **Other Libraries** - Room, Moshi  
 
