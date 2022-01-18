@@ -47,6 +47,12 @@ class MainActivity: BaseActivity() {
         mainViewModel.toastMessage.observe(this, {
             showToast(it)
         })
+        mainViewModel.selectedCurrencyInfo.observe(this, {
+            if (it.id.isNotEmpty()) {
+                showToast(String.format(getString(R.string.toast_currency_info), it.name, it.symbol))
+
+            }
+        })
     }
 
     private fun transToFrag(frag: BaseFragment) {

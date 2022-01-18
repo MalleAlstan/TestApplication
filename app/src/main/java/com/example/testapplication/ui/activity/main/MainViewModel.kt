@@ -20,6 +20,9 @@ class MainViewModel @Inject constructor(
     private var _currencyList = MutableLiveData<List<CurrencyInfo>>(listOf())
     val currencyList: LiveData<List<CurrencyInfo>> = _currencyList
 
+    private var _selectedCurrencyInfo = MutableLiveData(CurrencyInfo())
+    val selectedCurrencyInfo: LiveData<CurrencyInfo> = _selectedCurrencyInfo
+
     private var currencyListJob: Job? = null
 
     fun fetchCurrency() {
@@ -55,9 +58,6 @@ class MainViewModel @Inject constructor(
     }
 
     fun onSelectCurrencyInfo(currencyInfo: CurrencyInfo) {
-        if (currencyInfo.id.isNotEmpty()) {
-            _toastMessage.value =
-                String.format("%s (%s)", currencyInfo.name, currencyInfo.symbol)
-        }
+        _selectedCurrencyInfo.value = currencyInfo
     }
 }

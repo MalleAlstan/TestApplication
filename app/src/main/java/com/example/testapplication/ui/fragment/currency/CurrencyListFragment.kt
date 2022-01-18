@@ -35,7 +35,7 @@ class CurrencyListFragment: BaseFragment() {
     override fun initView() {
 
         currencyInfoAdapter =
-            CurrencyInfoAdapter(mainViewModel.currencyList.value?: arrayListOf()) { onItemClicked(it) }
+            CurrencyInfoAdapter(mainViewModel.currencyList.value?: arrayListOf()) { onCurrencyInfoClicked(it) }
 
         binding.rvCurrencyInfo.apply {
             layoutManager = LinearLayoutManager(requireActivity(), RecyclerView.VERTICAL, false)
@@ -56,7 +56,7 @@ class CurrencyListFragment: BaseFragment() {
         }
     }
 
-    private fun onItemClicked(currencyInfo: CurrencyInfo) {
+    private fun onCurrencyInfoClicked(currencyInfo: CurrencyInfo) {
         mainViewModel.onSelectCurrencyInfo(currencyInfo)
     }
 }
