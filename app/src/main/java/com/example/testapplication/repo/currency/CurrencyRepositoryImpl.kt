@@ -4,6 +4,7 @@ import com.example.testapplication.di.DispatcherModule
 import com.example.testapplication.di.SourceModule.LocalData
 import com.example.testapplication.di.SourceModule.RemoteData
 import com.example.testapplication.model.data.CurrencyInfo
+import com.example.testapplication.source.Response
 import com.example.testapplication.source.Source
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
@@ -21,9 +22,9 @@ class CurrencyRepositoryImpl @Inject constructor(
 
     private var hasLocalData = false
 
-    override suspend fun fetchCurrencyList(): Flow<List<CurrencyInfo>> =
+    override suspend fun fetchCurrencyList(): Response<Flow<List<CurrencyInfo>>> =
         withContext(ioDispatcher){
-            val response: Flow<List<CurrencyInfo>>?
+            val response: Response<Flow<List<CurrencyInfo>>>
 
             if (hasLocalData) {
                 response = localSource.fetchCurrency()

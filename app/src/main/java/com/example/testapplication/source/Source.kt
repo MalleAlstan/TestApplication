@@ -6,5 +6,5 @@ import kotlinx.coroutines.flow.Flow
 
 interface Source {
 
-    suspend fun fetchCurrency(): Flow<List<CurrencyInfo>>
+    suspend fun fetchCurrency(): Response<Flow<List<CurrencyInfo>>>
 }

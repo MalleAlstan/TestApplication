@@ -2,6 +2,7 @@ package com.example.testapplication.source.remote
 
 import android.database.sqlite.SQLiteException
 import com.example.testapplication.model.data.CurrencyInfo
+import com.example.testapplication.source.Response
 import com.example.testapplication.source.Source
 import com.example.testapplication.source.local.room.CurrencyInfoDao
 import com.squareup.moshi.JsonAdapter
@@ -19,18 +20,22 @@ class RemoteSourceImpl @Inject constructor(
     private val currencyInfoListJsonAdapter: JsonAdapter<List<CurrencyInfo>>
 ): Source {
 
-    override suspend fun fetchCurrency(): Flow<List<CurrencyInfo>> {
+    override suspend fun fetchCurrency(): Response<Flow<List<CurrencyInfo>>> {
 
-        try {
+        return try {
+
             val currencyInfoList = getMockResponse()
+
             for (info in currencyInfoList) {
                 currencyInfoDao.insertAll(info)
             }
+            // not to show directly for demo
+            Response.Success(flowOf())
+
         } catch (e: SQLiteException) {
             e.printStackTrace()
-            return flowOf()
-        }
-        return flowOf()
+            Response.Error(e.message, flowOf(currencyInfoDao.getAll()))
+         }
     }
 
     private fun getMockResponse(): List<CurrencyInfo> {

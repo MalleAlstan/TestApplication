@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.testapplication.model.data.CurrencyInfo
 import com.example.testapplication.repo.currency.CurrencyRepository
+import com.example.testapplication.source.Response
 import com.example.testapplication.ui.activity.BaseActivityViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.*
@@ -19,9 +20,6 @@ class MainViewModel @Inject constructor(
     private var _currencyList = MutableLiveData<List<CurrencyInfo>>(listOf())
     val currencyList: LiveData<List<CurrencyInfo>> = _currencyList
 
-    private var _selectedCurrency = MutableLiveData(CurrencyInfo())
-    val selectedCurrency: LiveData<CurrencyInfo> = _selectedCurrency
-
     private var currencyListJob: Job? = null
 
     fun fetchCurrency() {
@@ -32,8 +30,14 @@ class MainViewModel @Inject constructor(
 
         currencyListJob = viewModelScope.launch {
             yield()
-            currencyRepository.fetchCurrencyList().collect {
-                _currencyList.value = it
+            val result = currencyRepository.fetchCurrencyList()
+
+            if (result is Response.Success) {
+                result.data?.collect {
+                    _currencyList.value = it
+                }
+            } else {
+                _toastMessage.value = result.message
             }
         }
     }
@@ -51,6 +55,9 @@ class MainViewModel @Inject constructor(
     }
 
     fun onSelectCurrencyInfo(currencyInfo: CurrencyInfo) {
-        _selectedCurrency.value = currencyInfo
+        if (currencyInfo.id.isNotEmpty()) {
+            _toastMessage.value =
+                String.format("%s (%s)", currencyInfo.name, currencyInfo.symbol)
+        }
     }
 }

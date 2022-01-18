@@ -44,8 +44,11 @@ class MainActivity: BaseActivity() {
 
     override fun bindData() {
 
-        mainViewModel.selectedCurrency.observe(this, {
-            onCurrencyInfoClick(it)
+        mainViewModel.toastMessage.observe(this, {
+            showToast(it)
+        })
+        mainViewModel.toastMessage.observe(this, {
+
         })
     }
 
@@ -55,11 +58,5 @@ class MainActivity: BaseActivity() {
             .beginTransaction()
             .replace(R.id.main_container, frag)
             .commit()
-    }
-
-    private fun onCurrencyInfoClick(info: CurrencyInfo) {
-        if (info.id.isNotEmpty()) {
-            Toast.makeText(this, info.name, Toast.LENGTH_SHORT).show()
-        }
     }
 }
