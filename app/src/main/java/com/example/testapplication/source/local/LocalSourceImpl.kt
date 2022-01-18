@@ -21,7 +21,7 @@ class LocalSourceImpl @Inject constructor(
             Response.Success(flowOf(currencyInfoDao.getAll()))
         } catch (e: SQLiteException) {
             e.printStackTrace()
-            Response.Error(e.message, flowOf(currencyInfoDao.getAll()))
+            Response.Error(e.message, flowOf())
         }
     }
 }

@@ -27,7 +27,7 @@ class MainViewModelTest: BaseTest() {
     }
 
     @Test
-    fun fetchCurrencyNormalTest() {
+    fun fetchCurrencySuccessTest() {
 
         runBlockingTest {
             Mockito.`when`(currencyRepository.fetchCurrencyList()).thenReturn(
@@ -37,6 +37,21 @@ class MainViewModelTest: BaseTest() {
             mainViewModel.fetchCurrency()
 
             Assert.assertEquals(mockCurrencyInfoList, mainViewModel.currencyList.value)
+        }
+    }
+
+    @Test
+    fun fetchCurrencyErrorTest() {
+
+        runBlockingTest {
+            Mockito.`when`(currencyRepository.fetchCurrencyList()).thenReturn(
+                Response.Error(mockErrorMessage, flowOf())
+            )
+
+            mainViewModel.fetchCurrency()
+
+            Assert.assertEquals(listOf<CurrencyInfo>(), mainViewModel.currencyList.value)
+            Assert.assertEquals(mockErrorMessage, mainViewModel.toastMessage.value)
         }
     }
 
@@ -85,4 +100,6 @@ class MainViewModelTest: BaseTest() {
     )
 
     private val mockSelectedCurrencyInfo = CurrencyInfo("123", "SELECTED", "SLCT")
+
+    private val mockErrorMessage = "Mock Error Message"
 }

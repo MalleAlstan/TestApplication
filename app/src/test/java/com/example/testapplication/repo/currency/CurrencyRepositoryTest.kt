@@ -5,6 +5,7 @@ import com.example.testapplication.model.data.CurrencyInfo
 import com.example.testapplication.source.Response
 import com.example.testapplication.source.Source
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.test.runBlockingTest
@@ -30,7 +31,7 @@ class CurrencyRepositoryTest: BaseTest() {
     }
 
     @Test
-    fun fetchCurrencyNormalTest() {
+    fun fetchCurrencySuccessTest() {
 
         runBlockingTest {
 
@@ -52,6 +53,46 @@ class CurrencyRepositoryTest: BaseTest() {
         }
     }
 
+    @Test
+    fun fetchCurrencyRemoteErrorTest() {
+
+        runBlockingTest {
+
+            Mockito.`when`(remoteDataSource.fetchCurrency()).thenReturn(
+                Response.Error(mockErrorMessage, flowOf())
+            )
+
+            // should from remote
+            val errorResult = currencyRepository.fetchCurrencyList() as Response.Error<Flow<List<CurrencyInfo>>>
+
+            Assert.assertEquals(listOf<CurrencyInfo>(), errorResult.data?.toList())
+            Assert.assertEquals(mockErrorMessage, errorResult.message)
+        }
+    }
+
+    @Test
+    fun fetchCurrencyLocalErrorTest() {
+
+        runBlockingTest {
+
+            Mockito.`when`(remoteDataSource.fetchCurrency()).thenReturn(
+                Response.Success(flowOf(mockRemoteCurrencyInfoList))
+            )
+
+            Mockito.`when`(localDataSource.fetchCurrency()).thenReturn(
+                Response.Error(mockErrorMessage, flowOf())
+            )
+
+            // for triggering local flag
+            currencyRepository.fetchCurrencyList()
+
+            val errorResult = currencyRepository.fetchCurrencyList() as Response.Error<Flow<List<CurrencyInfo>>>
+
+            Assert.assertEquals(listOf<CurrencyInfo>(), errorResult.data?.toList())
+            Assert.assertEquals(mockErrorMessage, errorResult.message)
+        }
+    }
+
     private val mockRemoteCurrencyInfoList = listOf(
         CurrencyInfo("aaa", "AAA", "111"),
         CurrencyInfo("bbb", "BBB", "222"),
@@ -69,4 +110,6 @@ class CurrencyRepositoryTest: BaseTest() {
         CurrencyInfo("Leee", "LEEE", "L555"),
         CurrencyInfo("Lfff", "LFFF", "L666"),
     )
+
+    private val mockErrorMessage = "Mock Error Message"
 }
