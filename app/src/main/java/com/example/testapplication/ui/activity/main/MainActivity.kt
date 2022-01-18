@@ -47,9 +47,6 @@ class MainActivity: BaseActivity() {
         mainViewModel.toastMessage.observe(this, {
             showToast(it)
         })
-        mainViewModel.toastMessage.observe(this, {
-
-        })
     }
 
     private fun transToFrag(frag: BaseFragment) {
