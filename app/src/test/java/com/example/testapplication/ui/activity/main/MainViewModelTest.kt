@@ -1,33 +1,69 @@
 package com.example.testapplication.ui.activity.main
 
 
-import com.example.BaseViewModelTest
+import com.example.testapplication.BaseTest
 import com.example.testapplication.model.data.CurrencyInfo
 import com.example.testapplication.repo.currency.CurrencyRepository
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runBlockingTest
-import kotlinx.coroutines.test.setMain
-import org.junit.After
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
-import org.junit.runner.RunWith
 import org.mockito.InjectMocks
-import org.mockito.Mock
 import org.mockito.Mockito
-import org.mockito.junit.MockitoJUnitRunner
 
 @ExperimentalCoroutinesApi
-@RunWith(MockitoJUnitRunner::class)
-class MainViewModelTest: BaseViewModelTest() {
+class MainViewModelTest: BaseTest() {
 
     @InjectMocks
     private val currencyRepository = Mockito.mock(CurrencyRepository::class.java)
-
     private lateinit var mainViewModel: MainViewModel
+
+    @Before
+    fun setUp() {
+        mainViewModel = MainViewModel(currencyRepository)
+    }
+
+    @Test
+    fun fetchCurrencyNormalTest() {
+
+        runBlockingTest {
+            Mockito.`when`(currencyRepository.fetchCurrencyList()).thenReturn(
+                flowOf(mockCurrencyInfoList)
+            )
+
+            mainViewModel.fetchCurrency()
+
+            Assert.assertEquals(mockCurrencyInfoList, mainViewModel.currencyList.value)
+        }
+    }
+
+    @Test
+    fun sortCurrencyNormalTest() {
+
+        runBlockingTest {
+            Mockito.`when`(currencyRepository.fetchCurrencyList()).thenReturn(
+                flowOf(mockCurrencyInfoList)
+            )
+
+            mainViewModel.fetchCurrency()
+            mainViewModel.sortCurrency()
+
+            Assert.assertEquals(mockSortedCurrencyInfoList, mainViewModel.currencyList.value)
+        }
+    }
+
+    @Test
+    fun onSelectCurrencyInfoNormalTest() {
+
+        runBlockingTest {
+
+            mainViewModel.onSelectCurrencyInfo(mockSelectedCurrencyInfo)
+
+            Assert.assertEquals(mockSelectedCurrencyInfo, mainViewModel.selectedCurrency.value)
+        }
+    }
 
     private val mockCurrencyInfoList = listOf(
         CurrencyInfo("aaa", "AAA", "111"),
@@ -47,44 +83,5 @@ class MainViewModelTest: BaseViewModelTest() {
         CurrencyInfo("fff", "FFF", "666"),
     )
 
-    @Before
-    fun setUp() {
-        Dispatchers.setMain(coroutineDispatcher)
-        mainViewModel = MainViewModel(currencyRepository)
-    }
-
-    @Test
-    fun fetchCurrencyNormal() {
-
-        runBlockingTest {
-            Mockito.`when`(currencyRepository.fetchCurrencyList()).thenReturn(
-                flowOf(mockCurrencyInfoList)
-            )
-
-            mainViewModel.fetchCurrency()
-
-            Assert.assertEquals(mainViewModel.currencyList.value, mockCurrencyInfoList)
-        }
-    }
-
-    @Test
-    fun sortCurrencyNormal() {
-
-        runBlockingTest {
-            Mockito.`when`(currencyRepository.fetchCurrencyList()).thenReturn(
-                flowOf(mockCurrencyInfoList)
-            )
-
-            mainViewModel.fetchCurrency()
-            mainViewModel.sortCurrency()
-
-            Assert.assertEquals(mockSortedCurrencyInfoList, mainViewModel.currencyList.value)
-        }
-    }
-
-    @After
-    fun tearDown() {
-        Dispatchers.resetMain()
-        coroutineDispatcher.cleanupTestCoroutines()
-    }
+    private val mockSelectedCurrencyInfo = CurrencyInfo("123", "SELECTED", "SLCT")
 }
