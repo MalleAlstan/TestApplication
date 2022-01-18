@@ -1,6 +1,7 @@
 <resources>
-    <dimen name="dp_general_margin">32dp</dimen>
-    <dimen name="dp_currecny_item_height">64dp</dimen>
+    <dimen name="dp_general_horizontal_margin">32dp</dimen>
+    <dimen name="dp_general_vertical_margin">16dp</dimen>
+    <dimen name="dp_currency_item_height">64dp</dimen>
     <dimen name="sp_currency_logo">24sp</dimen>
     <dimen name="sp_currency_name">18sp</dimen>
 </resources>
