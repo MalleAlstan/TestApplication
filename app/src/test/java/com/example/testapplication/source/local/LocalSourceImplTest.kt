@@ -35,7 +35,7 @@ class LocalSourceImplTest: BaseTest() {
 
             Mockito.`when`(currencyInfoDao.getAll()).thenReturn(mockCurrencyInfoList)
 
-            val result = localDataSource.fetchCurrency().toList().first()
+            val result = localDataSource.fetchCurrency().data?.toList()?.first()
             Assert.assertEquals(mockCurrencyInfoList, result)
         }
     }

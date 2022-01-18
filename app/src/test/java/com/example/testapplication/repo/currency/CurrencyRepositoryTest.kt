@@ -2,6 +2,7 @@ package com.example.testapplication.repo.currency
 
 import com.example.testapplication.BaseTest
 import com.example.testapplication.model.data.CurrencyInfo
+import com.example.testapplication.source.Response
 import com.example.testapplication.source.Source
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flowOf
@@ -34,19 +35,19 @@ class CurrencyRepositoryTest: BaseTest() {
         runBlockingTest {
 
             Mockito.`when`(remoteDataSource.fetchCurrency()).thenReturn(
-                flowOf(mockRemoteCurrencyInfoList)
+                Response.Success(flowOf(mockRemoteCurrencyInfoList))
             )
 
             Mockito.`when`(localDataSource.fetchCurrency()).thenReturn(
-                flowOf(mockLocalCurrencyInfoList)
+                Response.Success(flowOf(mockLocalCurrencyInfoList))
             )
 
             // should from remote
-            val remoteResult = currencyRepository.fetchCurrencyList().toList().first()
+            val remoteResult = currencyRepository.fetchCurrencyList().data?.toList()?.first()
             Assert.assertEquals(mockRemoteCurrencyInfoList, remoteResult)
 
             // should from local
-            val localResult= currencyRepository.fetchCurrencyList().toList().first()
+            val localResult= currencyRepository.fetchCurrencyList().data?.toList()?.first()
             Assert.assertEquals(mockLocalCurrencyInfoList, localResult)
         }
     }

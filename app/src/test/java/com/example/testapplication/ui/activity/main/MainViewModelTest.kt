@@ -4,6 +4,7 @@ package com.example.testapplication.ui.activity.main
 import com.example.testapplication.BaseTest
 import com.example.testapplication.model.data.CurrencyInfo
 import com.example.testapplication.repo.currency.CurrencyRepository
+import com.example.testapplication.source.Response
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runBlockingTest
@@ -30,7 +31,7 @@ class MainViewModelTest: BaseTest() {
 
         runBlockingTest {
             Mockito.`when`(currencyRepository.fetchCurrencyList()).thenReturn(
-                flowOf(mockCurrencyInfoList)
+                Response.Success(flowOf(mockCurrencyInfoList))
             )
 
             mainViewModel.fetchCurrency()
@@ -44,7 +45,7 @@ class MainViewModelTest: BaseTest() {
 
         runBlockingTest {
             Mockito.`when`(currencyRepository.fetchCurrencyList()).thenReturn(
-                flowOf(mockCurrencyInfoList)
+                Response.Success(flowOf(mockCurrencyInfoList))
             )
 
             mainViewModel.fetchCurrency()
@@ -61,7 +62,7 @@ class MainViewModelTest: BaseTest() {
 
             mainViewModel.onSelectCurrencyInfo(mockSelectedCurrencyInfo)
 
-            Assert.assertEquals(mockSelectedCurrencyInfo, mainViewModel.selectedCurrency.value)
+            Assert.assertEquals(mockSelectedCurrencyInfo, mainViewModel.selectedCurrencyInfo.value)
         }
     }
 

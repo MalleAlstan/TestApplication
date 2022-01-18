@@ -39,7 +39,7 @@ class RemoteSourceImplTest: BaseTest() {
 
         runBlockingTest {
 
-            val result = localDataSource.fetchCurrency().toList()
+            val result = localDataSource.fetchCurrency().data?.toList()
             Assert.assertEquals(listOf<CurrencyInfo>(), result)
         }
     }
