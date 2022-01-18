@@ -23,7 +23,6 @@ class RemoteSourceImplTest: BaseTest() {
 
     @InjectMocks
     private val currencyInfoDao = Mockito.mock(CurrencyInfoDao::class.java)
-//    private val adapter = Mockito.spy(JsonAdapter::class.java) as JsonAdapter<List<CurrencyInfo>>
     private lateinit var localDataSource: RemoteSourceImpl
 
     @Before
