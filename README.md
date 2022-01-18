@@ -30,5 +30,5 @@ The data is automatically mocked and saved into local DB once the
 app is launch (but not shown on the screen). Press the **[Get]** button  
 to load data from DB and show it on the screen.  
 
-### [Sor Currency List]
+### [Sort Currency List]
 Press the **[Sort]** button sort the loaded data on the screen.  
