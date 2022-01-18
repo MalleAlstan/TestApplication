@@ -1,7 +1,5 @@
 package com.example.testapplication.repo.currency
 
-import android.database.SQLException
-import androidx.lifecycle.asLiveData
 import com.example.testapplication.BaseTest
 import com.example.testapplication.model.data.CurrencyInfo
 import com.example.testapplication.source.Source

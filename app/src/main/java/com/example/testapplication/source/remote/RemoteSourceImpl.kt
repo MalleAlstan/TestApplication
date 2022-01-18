@@ -15,8 +15,8 @@ import javax.inject.Singleton
 
 @Singleton
 class RemoteSourceImpl @Inject constructor(
-    private val currencyInfo: CurrencyInfoDao,
-    private val moshi: Moshi
+    private val currencyInfoDao: CurrencyInfoDao,
+    private val currencyInfoListJsonAdapter: JsonAdapter<List<CurrencyInfo>>
 ): Source {
 
     override suspend fun fetchCurrency(): Flow<List<CurrencyInfo>> {
@@ -24,20 +24,17 @@ class RemoteSourceImpl @Inject constructor(
         try {
             val currencyInfoList = getMockResponse()
             for (info in currencyInfoList) {
-                currencyInfo.insertAll(info)
+                currencyInfoDao.insertAll(info)
             }
         } catch (e: SQLiteException) {
             e.printStackTrace()
+            return flowOf()
         }
-        // save mock data to db only.
         return flowOf()
     }
 
     private fun getMockResponse(): List<CurrencyInfo> {
-
-        val type: Type = Types.newParameterizedType(List::class.java, CurrencyInfo::class.java)
-        val adapter: JsonAdapter<List<CurrencyInfo>> = moshi.adapter(type)
-        return adapter.fromJson(mockJson)?: listOf()
+        return currencyInfoListJsonAdapter.fromJson(mockJson)?: listOf()
     }
 
     private val mockJson = "[ \n" +
