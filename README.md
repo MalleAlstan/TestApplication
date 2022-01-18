@@ -27,8 +27,8 @@ This is a list showing demo app.
 
 ### [Get Currency List]
 The data is automatically mocked and saved into local DB once the  
-app is launch (but not shown on the screen). Press the **[Get]** button  
+app is launched (but not shown on the screen). Press the **[Get]** button  
 to load data from DB and show it on the screen.  
 
 ### [Sort Currency List]
-Press the **[Sort]** button sort the loaded data on the screen.  
+Press the **[Sort]** button to sort the loaded data on the screen.  
