@@ -7,7 +7,7 @@ This is a list showing demo app.
 ## [Environments]：
 
 **Android Version** - Later than Android 21  
-**Programming Language** - Kotlin  
+**Language** - Kotlin  
 **Data Injection** - Hilt  
 **Framework** - MVVM with Coroutine and LiveData  
 **Unit/UI test** - Mockito, JUnit  
